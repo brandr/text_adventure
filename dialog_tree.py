@@ -14,6 +14,7 @@ INCREASE_DAYS = "increase_days"
 INCREASE_SCORE = "increase_score"
 INCREASE_BABIES = "increase_babies"
 INCREASE_BABIES_RESPECT = "increase_babies_respect"
+LOSE_ALL_BABIES = "lose_all_babies"
 
 # special event key names
 
@@ -109,6 +110,12 @@ TURTLE_ATTACK = "turtle_attack"
 TURTLE_ATTACK_FAIL = "turtle_attack_fail"
 FAILED_TURTLE_SCHEME = "failed_turtle_scheme"
 EVENTFUL_NIGHT_1 = "eventful_night_1"
+EVENTFUL_NIGHT_2 = "eventful_night_2"
+BABIES_EATEN = "babies_eaten"
+JAGUAR_FEAST = "jaguar_feast"
+DID_YOU_REALLY = "did_you_really"
+GREVIOUS_NIGHT = "grevious_night"
+HIDING_SUCCESS = "hiding_success"
 
 MASTER_DIALOG_DATA_MAP = {
 
@@ -180,7 +187,7 @@ MASTER_DIALOG_DATA_MAP = {
 				{TEXT:"A dead crow", NEXT:BABIES_DONT_WANT_IT},
 				{TEXT:"A frog you caught", CHANCE:[(.6, BABIES_DONT_WANT_IT),(.4, SATISFIED_BABIES)]},
 				{TEXT:"Various grasses", CHANCE:[(.3, BABIES_DONT_WANT_IT),(.7, SATISFIED_BABIES)]},
-				{TEXT:"Some berries", CHANCE:[(.5, BABIES_DONT_WANT_IT),(.5, SATISFIED_BABIES)]},
+				{TEXT:"Some berries", CHANCE:[(.6, BABIES_DONT_WANT_IT),(.4, VERY_SATISFIED_BABIES)]},
 				{TEXT:"A snail", CHANCE:[(.5, BABIES_DONT_WANT_IT),(.5, SATISFIED_BABIES)]},
 				{TEXT:"A mango", NEXT:BABIES_DONT_WANT_IT},
 			]
@@ -192,6 +199,15 @@ MASTER_DIALOG_DATA_MAP = {
 		],
 		ACTIONS:[
 			(INCREASE_BABIES_RESPECT, 1)
+		],
+		CHANCE:[(.7, SWIMMING_URGE), (.1, SNUGGLING_BABIES), (.2, SLEEPING_BABIES)]
+	},
+	VERY_SATISFIED_BABIES:{
+		TEXT:[
+			"Your babies love it!"
+		],
+		ACTIONS:[
+			(INCREASE_BABIES_RESPECT, 4)
 		],
 		CHANCE:[(.7, SWIMMING_URGE), (.1, SNUGGLING_BABIES), (.2, SLEEPING_BABIES)]
 	},
@@ -385,10 +401,11 @@ MASTER_DIALOG_DATA_MAP = {
 			{TEXT:"On the water", NEXT:WATER_CHOW}
 		]
 	},
-	RIGHT_WHERE_I_AM_NOTHING:{	#X
+	RIGHT_WHERE_I_AM_NOTHING:{	
 		TEXT:[
 			"You don't find anything edible of interest."
 		],
+		NEXT:MORNING_HUNGER_1
 	},
 	SWIMMING_URGE:{
 		TEXT:[
@@ -399,7 +416,7 @@ MASTER_DIALOG_DATA_MAP = {
 			{TEXT:"Don't go swimming", NEXT:DONT_GO_SWIMMING},
 			{TEXT:"Go flying", NEXT:GO_FLYING_1} 
 		],
-		BABY_VERSION:{ #/
+		BABY_VERSION:{ 
 			TEXT:[
 				"Your babies want to go swimming in a nearby pond."
 			],
@@ -410,7 +427,7 @@ MASTER_DIALOG_DATA_MAP = {
 			]
 		}
 	},
-	SWIMMING_BABIES_SHORE:{ #/
+	SWIMMING_BABIES_SHORE:{ 
 		TEXT:[
 			"You are getting some nice sun and your babies are swimming happily."
 		],	
@@ -419,7 +436,7 @@ MASTER_DIALOG_DATA_MAP = {
 		],
 		CHANCE:[(.6, TURTLE_LOG), (.4, DONE_SWIMMING) ]
 	},
-	TURTLE_LOG:{ #/
+	TURTLE_LOG:{ 
 		TEXT:[
 			"You see what looks to be either a small log or a snapping turtle in the water close to your babies."
 		],
@@ -451,13 +468,14 @@ MASTER_DIALOG_DATA_MAP = {
 		],
 		ACTIONS:[
 			(INCREASE_BABIES, -1),
-			(INCREASE_BABIES_RESPECT, -15)
+			(INCREASE_BABIES_RESPECT, -15),
+			(INCREASE_SCORE, -30u)
 		],
 		NEXT:GETTING_LATE
 	},
 	TURTLE_ATTACK_FAIL:{
 		TEXT:[
-			"You see that it actually was a turtle, and it tries to kill one of your duclkings, but luckily fails."
+			"You see that it actually was a turtle, and it tries to kill one of your ducklings, but luckily fails."
 		],
 		ACTIONS:[
 			(INCREASE_BABIES_RESPECT, -10)
@@ -470,7 +488,7 @@ MASTER_DIALOG_DATA_MAP = {
 			"but now your babies are safe."
 		],
 		ACTIONS:[
-			(INCREASE_BABIES_RESPECT, 25)
+			(INCREASE_BABIES_RESPECT, 15)
 		],
 		NEXT:GETTING_LATE
 	},
@@ -487,7 +505,7 @@ MASTER_DIALOG_DATA_MAP = {
 		ACTIONS:[
 			(INCREASE_BABIES_RESPECT, 5)
 		],
-		NEXT:EVENTFUL_NIGHT_1
+		CHANCE:[(.4, EVENTFUL_NIGHT_1), (.2, EVENTFUL_NIGHT_2), (.4, UNEVENTFUL_NIGHT_1)]
 	},
 	DISAPPOINTED_BABIES:{
 		TEXT:[
@@ -517,6 +535,16 @@ MASTER_DIALOG_DATA_MAP = {
 			(INCREASE_BABIES_RESPECT, -10)
 		],
 		CHANCE:[(.1, JAGUAR_ENCOUNTER), (.2, WAKE_UP_SNAKE), (.6, MORNING_HUNGER_1), (.1, SWIMMING_URGE)]
+	},
+	EVENTFUL_NIGHT_2:{
+		TEXT:[
+			"You have an eventful night when one of your babies wakes up and hurts himself a tiny bit,",
+			"and you did nothing about it because you were asleep."
+		],
+		ACTIONS:[
+			(INCREASE_BABIES_RESPECT, -5)
+		],
+		CHANCE:[(.1, JAGUAR_ENCOUNTER), (.1, WAKE_UP_SNAKE), (.6, MORNING_HUNGER_1), (.2, SWIMMING_URGE)]
 	},
 	GO_FLYING_1:{
 		TEXT: [
@@ -555,7 +583,7 @@ MASTER_DIALOG_DATA_MAP = {
 		]
 	},
 	FAILED_COURTING_RESPONSE_1:{
-		TEXT:[
+		TEXT:[u
 			"The mallard is confused by your unusual courting methods and eventually gives up."
 		],
 		NEXT:GETTING_LATE
@@ -594,13 +622,13 @@ MASTER_DIALOG_DATA_MAP = {
 		],
 		NEXT:UNEVENTFUL_DAY_1
 	},
-	TOUCANT:{	#-
+	TOUCANT:{
 		TEXT:[
 			"You ignore it and have an otherwise uneventful day."
 		],
 		NEXT:UNEVENTFUL_NIGHT_3
 	},
-	JAGUAR_ENCOUNTER:{	#-
+	JAGUAR_ENCOUNTER:{	
 		TEXT:[
 			"JAGUAR!!!!!"
 		],
@@ -608,11 +636,23 @@ MASTER_DIALOG_DATA_MAP = {
 			{TEXT:"RUN!!", NEXT:JAGUAR_WADDLE_DEATH},
 			{TEXT:"FLY!!", NEXT:JAGAUR_ESCAPE},
 			{TEXT:"SWIM!!", NEXT:JAGUAR_SWIMMING_DEATH}
-		]
+		],
+		BABY_VERSION:{
+			TEXT:[
+			"You see a jaguar! Save the babies!!!"
+			],
+			OPTIONS:[
+				{TEXT:"RUN!!", NEXT:DID_YOU_REALLY},
+				{TEXT:"FLY!!", NEXT:BABIES_EATEN},
+				{TEXT:"Swim away", NEXT:JAGUAR_SWIMMING_DEATH},
+				{TEXT:"Hide", CHANCE:[(.2, JAGUAR_FEAST), (.2, BABIES_EATEN), (.6, HIDING_SUCCESS)]}
+			]
+		}
 	},
 	JAGUAR_WADDLE_DEATH:{
 		TEXT:[
-			"You stupid duck! Ducks can only waddle at two or three miles per hour!", "GAME OVER"
+			"You stupid duck! Ducks can only waddle at two or three miles per hour!", 
+			"GAME OVER"
 		],
 		ACTIONS:[
 			(GAME_OVER, None)
@@ -620,17 +660,62 @@ MASTER_DIALOG_DATA_MAP = {
 	},
 	JAGUAR_SWIMMING_DEATH:{
 		TEXT:[
-			"You stupid duck! Jaguars are one of the few swimming cats!", "GAME OVER"
+			"You stupid duck! Jaguars are one of the few swimming cats!", 
+			"GAME OVER"
 		],
 		ACTIONS:[
 			(GAME_OVER, None)
 		]	
+	},
+	DID_YOU_REALLY:{
+		TEXT:[
+			"Did you really think that was going to work?",
+			"GAME OVER"
+		],
+		ACTIONS:[
+			(GAME_OVER, None)
+		]
+	},
+	BABIES_EATEN:{
+		TEXT:[
+			"Despite your best effort, it eats your babies.",
+			"Luckily, you survived, though."
+		],
+		ACTIONS:[
+			(LOSE_ALL_BABIES, None),
+			(LOSE_ALL_BABIES_RESPECT, None),
+			(INCREASE_SCORE, -50)
+		],
+		NEXT:GREVIOUS_NIGHT
+	},
+	JAGUAR_FEAST:{
+		TEXT:[
+			"You manage to avoid the jaguar, but then it pounces from behind",
+			"and devours you and your family.",
+			"GAME OVER"
+		],
+		ACTIONS:[
+			(GAME_OVER, None)
+		]
 	},
 	JAGAUR_ESCAPE:{
 		TEXT:[
 			"Phew! That was a close one! Lucky jaguars can't fly, am I right?"
 		],
 		NEXT:GETTING_LATE
+	},
+	HIDING_SUCCESS:{
+		TEXT:[
+			"You dive into a bush and your babies quickly follow, and you manage to avoid it."
+		],
+		NEXT:GETTING_LATE
+	},
+	GREVIOUS_NIGHT:{
+		TEXT:[
+			"You can't sleep because you spend the entire night thinking about",
+			"what you could have done to save your babies."
+		],
+		NEXT:UNEVENTFUL_DAY_1
 	},
 	FEMALE_DUCK_ENCOUNTER:{
 		TEXT:[
@@ -649,7 +734,7 @@ MASTER_DIALOG_DATA_MAP = {
 		],
 		NEXT:GETTING_LATE
 	},
-	NEST_DISCOVER:{ #-
+	NEST_DISCOVER:{
 		TEXT:[
 			"You chase the duck away and discover it was sitting on a nest with eggs in it."
 		],
@@ -681,14 +766,22 @@ MASTER_DIALOG_DATA_MAP = {
 	},
 	DUCK_BEFRIEND_FAIL:{
 		TEXT:[
-			"You try and befriend the duck, but it doesn't really care for you.", "It seems to be sitting on a nest."
+			"You try and befriend the duck, but it doesn't really care for you.", 
+			"It seems to be sitting on a nest."
 		],
 		NEXT:GETTING_LATE
 	},
 	NEST_SITTING_1:{
 		TEXT:[
-			""
+			"After a few weeks, the eggs start to crack. They're hatching!!!"
 		],
+		ACTIONS:[
+			(INCREASE_SCORE, 20),
+			(INCREASE_DAYS, 20),
+			(INCREASE_BABIES, 6),
+			(INCREASE_BABIES_RESPECT, 75)
+		],
+		NEXT:SO_CUTE
 	},
 	GETTING_LATE:{
 		TEXT:[
@@ -982,6 +1075,12 @@ class DialogTree:
 		self.manager.babies_respect += respect
 		if self.manager.babies_respect <= 0: self.event_key = LOSE_ALL_BABIES_RESPECT
 
+	def lose_all_babies(self, arg):
+		self.manager.babies = 0
+
+	def lose_all_babies_respect(self, arg):
+		self.manager.babies_respect = 0		
+
 	def get_current_text(self):
 		return self.get_current_event_map()[TEXT]
 
@@ -1004,5 +1103,7 @@ ACTION_MAP = {
 	INCREASE_SCORE:DialogTree.increment_score,
 	INCREASE_BABIES:DialogTree.increment_babies,
 	INCREASE_BABIES_RESPECT:DialogTree.increment_babies_respect,
+	LOSE_ALL_BABIES:DialogTree.lose_all_babies,
+	LOSE_ALL_BABIES_RESPECT:DialogTree.lose_all_babies_respect,
 	GAME_OVER:DialogTree.game_over
 }
