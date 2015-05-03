@@ -116,6 +116,7 @@ JAGUAR_FEAST = "jaguar_feast"
 DID_YOU_REALLY = "did_you_really"
 GREVIOUS_NIGHT = "grevious_night"
 HIDING_SUCCESS = "hiding_success"
+VERY_SATISFIED_BABIES = "very_satisfied_babies"
 
 MASTER_DIALOG_DATA_MAP = {
 
@@ -469,7 +470,7 @@ MASTER_DIALOG_DATA_MAP = {
 		ACTIONS:[
 			(INCREASE_BABIES, -1),
 			(INCREASE_BABIES_RESPECT, -15),
-			(INCREASE_SCORE, -30u)
+			(INCREASE_SCORE, -30)
 		],
 		NEXT:GETTING_LATE
 	},
@@ -583,7 +584,7 @@ MASTER_DIALOG_DATA_MAP = {
 		]
 	},
 	FAILED_COURTING_RESPONSE_1:{
-		TEXT:[u
+		TEXT:[
 			"The mallard is confused by your unusual courting methods and eventually gives up."
 		],
 		NEXT:GETTING_LATE
